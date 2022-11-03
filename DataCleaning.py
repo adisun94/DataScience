@@ -8,7 +8,6 @@ class patch_year:
     end=2022
     cum_sales={}
     sales=pd.DataFrame()
-    five_most_sales=[]
 
     def __init__(self,state,data):
         self.state=state
@@ -40,7 +39,7 @@ class patch_year:
         return self.cum_sales
 
     def five_most_makes(self):
+        self.five_most_sales=[]
         for y in range(self.year_vs_make().shape[0]):
             self.five_most_sales.append(self.year_vs_make().iloc[y].nlargest(5).to_frame().T)
         return self.five_most_sales
-
