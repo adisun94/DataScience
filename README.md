@@ -1,15 +1,15 @@
 ## This repository contains machine learning models to predict the reduction potential of organic molecules.
 
 	.
-	├── 1.MolRedPot\_FeatureEngineering.ipynb
-	├── 2.MolRedPot\_Regression.ipynb
-	├── 3.MolRedPot\_NN.ipynb
-	├── 4.MolRedPot\_Prediction.ipynb
+	├── 1.MolRedPot_FeatureEngineering.ipynb
+	├── 2.MolRedPot_Regression.ipynb
+	├── 3.MolRedPot_NN.ipynb
+	├── 4.MolRedPot_Prediction.ipynb
 	├── Data
-	│   ├── features\_test.csv
-	│   ├── features\_train.csv
-	│   ├── target\_test.csv
-	│   └── target\_train.csv
+	│   ├── features_test.csv
+	│   ├── features_train.csv
+	│   ├── target_test.csv
+	│   └── target_train.csv
 	├── Functions
 	│   ├── ChemClean.py
 	│   ├── Descriptors.py
@@ -19,10 +19,10 @@
 	├── Models
 	│   ├── EnsembleGBR.sav
 	│   ├── LinearRegression.sav
-	│   └── NN\_model
+	│   └── NN_model
 	│       ├── assets
-	│       ├── keras\_metadata.pb
-	│       ├── saved\_model.pb
+	│       ├── keras_metadata.pb
+	│       ├── saved_model.pb
 	│       └── variables
 	│           ├── variables.data-00000-of-00001
 	│           └── variables.index
@@ -30,7 +30,7 @@
 	├── Pipfile.lock
 	├── __pycache__
 	│   ├── ChemClean.cpython-310.pyc
-	│   └── Descriptors.cpython-310.pyc
+	│   └── Descriptos.cpython-310.pyc
 	├── README.md
 	└── requirements.txt
 
