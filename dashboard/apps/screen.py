@@ -14,9 +14,7 @@ from Functions import ChemClean
 from Functions import Descriptors
 
 import rdkit.Chem as Chem
-from rdkit.Chem import rdMolDescriptors 
-from sklearn.preprocessing import StandardScaler
-import pickle
+import datamol as dm
 
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath().resolve()
@@ -58,19 +56,20 @@ layout = html.Div([
         ),
     html.Div([
         "Enter molecule id between 0 and 5441 and press 'Enter': ",
-        dcc.Input(id='moleculeID', value=123, type='number',placeholder="Molecule ID", debounce=True,min=0, max=1183, step=1)
+        dcc.Input(id='moleculeID', value=123, type='number',placeholder="Molecule ID", debounce=True,min=0, max=5441, step=1)
         ]),
     html.Br(),
     html.Div(id='smiles'),
     html.Br(),
-    html.Div(id='potential'),
-    dcc.Graph(id='PD', figure={})
+    html.Div(id='potential')
+#    dcc.Graph(id='PD', figure={})
+ 
     ])
 
 @app.callback(
     Output(component_id='smiles',component_property='children'),
     Output(component_id='potential', component_property='children'),
-    Output(component_id='PD', component_property='figure'),
+#    Output(component_id='PD', component_property='figure'),
     Input(component_id='moleculeID', component_property='value')
     )
 
@@ -78,10 +77,13 @@ def update_output(input_id):
 
     print(input_id)
 
-    fig=make_subplots()
-    x,y=list(range(10)),list(range(10))
+    #fig=make_subplots()
+    #x,y=list(range(10)),list(range(10))
     #fig.add_trace(go.Scatter(x=x,y=y))
 
+#    mol=Chem.MolFromSmiles(df['SMILES'][input_id])
+#    fig=dm.to_image(mol)
+    
     #fig.update_xaxes(title='Temperature (C)')
     #fig.update_yaxes(title='Mass fraction')
     #fig.update_layout(height=600, width=600)
@@ -89,5 +91,5 @@ def update_output(input_id):
 
     o1='The molecule id selected is: '+str(input_id)+'\n'+'The molecule SMILES string is: '+df['SMILES'][input_id]
     o2='the predicted reduction potential = '+str(pot[input_id])+' V'
-    return o1,o2,fig
+    return o1,o2
 
