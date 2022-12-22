@@ -2,10 +2,10 @@
 	.
 	├── 1.MolRedPot_FeatureEngineering.ipynb
 	├── 2.MolRedPot_Regression.ipynb
+	├── 3a.MolRedPot_NN_Architecture.ipynb
 	├── 3b.MolRedPot_NN_LearningRateTuning.ipynb
 	├── 3c.MolRedPot_NN_BatchSizeTuning.ipynb
-	├── 3d.MolRedPot_NN_tuned.ipynb
-	├── 3.MolRedPot_NN.ipynb
+	├── 3d.MolRedPot_NN_KernelReg.ipynb
 	├── 4.MolRedPot_Prediction.ipynb
 	├── dashboard
 	│   ├── app.py
@@ -26,9 +26,10 @@
 	│   ├── data
 	│   │   └── MolRedPot_data.csv
 	│   ├── index.py
-	│   └── __pycache__
-	│       ├── app.cpython-310.pyc
-	│       └── app.cpython-36.pyc
+	│   ├── __pycache__
+	│   │   ├── app.cpython-310.pyc
+	│   │   └── app.cpython-36.pyc
+	│   └── README.md
 	├── Data
 	│   ├── features_test.csv
 	│   ├── features_test_scaled.csv
@@ -64,7 +65,6 @@
 	│           └── variables.index
 	├── model_tuned.h5
 	├── model_tuned.json
-	├── NN_model
 	├── Pipfile
 	├── Pipfile.lock
 	├── __pycache__
@@ -73,4 +73,4 @@
 	├── README.md
 	└── requirements.txt
 
-18 directories, 54 files
+17 directories, 55 files
