@@ -1,4 +1,4 @@
-## This repository contains machine learning models to predict the reduction potential of organic molecules.
+## This repository contains data pipeline (data cleaning operations, machine learning models and visualization dashbaords) to predict the reduction potential of organic molecules.
 	.
 	├── Data
 	├── Functions
