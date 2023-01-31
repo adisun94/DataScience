@@ -27,7 +27,7 @@ app.layout = html.Div([
 
     html.Div(children=[
         dcc.Markdown('''
-                #### This dashboard lists 5442 molecules, whose reduction potentials are predicted using a Gradient Boosting Regression model. The code repository including data, model pipelines is available [here](https://github.com/adisun94/DataScience) and [here](https://github.com/akashjn/DataScience). More information about Redox Flow Batteries is available [here](https://energystorage.org/why-energy-storage/technologies/redox-flow-batteries/)''')
+                #### This dashboard lists 5442 molecules, whose reduction potentials are predicted using ML models. The code repository including data, model pipelines is available [here](https://github.com/adisun94/DataScience) and [here](https://github.com/akashjn/DataScience). More information about Redox Flow Batteries is available [here](https://energystorage.org/why-energy-storage/technologies/redox-flow-batteries/)''')
         ],
         style={'padding': 10, 'flex': 1, 'background-color' : 'rgb(255,255,240)'}),
     html.Br(),
