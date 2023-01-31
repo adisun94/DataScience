@@ -34,7 +34,7 @@ app.layout = html.Div([
     html.Div(children=[
         html.Label(['Select colorbar property'], style={'font-weight': 'bold', "text-align": "left"}),
         dcc.Dropdown(
-            df.columns.drop(['URL']),
+            df.columns.drop(['ERed','MolLogP','SMILES']),
             value='MolWT',
             id='property',
             clearable=False)
@@ -64,6 +64,11 @@ app.layout = html.Div([
 
 def scatter_plot(value):
 
+    if value=='MolWT':
+        units='g/mol'
+    if value=='NValE':
+        units=''
+
     fig = go.Figure(data=[
     go.Scatter(
         x=df["MolLogP"],
@@ -73,7 +78,7 @@ def scatter_plot(value):
             colorscale='viridis',
             color=df[value],
             size=df["MolWT"],
-            colorbar={"title": value+' (units)'},
+            colorbar={"title": value+' ('+units+')'},
             line={"color": "#444"},
             reversescale=True,
             sizeref=45,
@@ -82,12 +87,12 @@ def scatter_plot(value):
             )
         )])
        
-    fig.update_layout(width=650,height=650)
+    fig.update_layout(width=800,height=650)
 
     fig.update_traces(hoverinfo="none", hovertemplate=None)
 
     fig.update_layout(
-        title='Molecule dataset : Redoxmer electrolytes for Redox Flow Batteries (RFB)',
+        #title='Molecule dataset : Redoxmer electrolytes for Redox Flow Batteries (RFB)',
         xaxis=dict(title='MolLogP'),
         yaxis=dict(title='ERed (V)'),
         font=dict(family="Arial",size=18),
@@ -106,6 +111,11 @@ def scatter_plot(value):
 
 def molecule_image(hoverData,value):
 
+    if value=='MolWT':
+        units='g/mol'
+    if value=='NValE':
+        units=''
+
     if hoverData is None:
 
         potential = {'method': ['DFT','LinearReg','GBR'], 'potential': [0,0,0]}
@@ -114,7 +124,7 @@ def molecule_image(hoverData,value):
         img = io.imread('assets/molecule.jpg')
         fig = px.imshow(img)
 
-        fig.update_layout(width=400,height=400)
+        fig.update_layout(width=500,height=500)
 
         fig.update_traces(hoverinfo="none", hovertemplate=None)
 
@@ -124,14 +134,14 @@ def molecule_image(hoverData,value):
         fig.update_layout(
             plot_bgcolor='rgba(255,255,240,1)',
             paper_bgcolor='rgba(255,255,240,1)',
-            margin=dict(l=20, r=20, t=150, b=00)
+            margin=dict(l=100, r=20, t=150, b=00)
             )
 
         fig2 = px.bar(potential,
         x='method',y='potential')
         
        
-        fig2.update_layout(width=400,height=400)
+        fig2.update_layout(width=400,height=600)
 
         fig2.update_layout(
         #title='Molecule dataset : Redoxmer electrolytes for Redox Flow Batteries (RFB)',
@@ -139,7 +149,8 @@ def molecule_image(hoverData,value):
         yaxis=dict(title='ERed (V)'),
         font=dict(family="Arial",size=18),
         plot_bgcolor='rgba(220,220,220,1)',
-        paper_bgcolor='rgba(255,255,240,1)'
+        paper_bgcolor='rgba(255,255,240,1)',
+        margin=dict(l=100, r=20, t=100, b=00)
         )
 
         return fig, fig2
@@ -170,25 +181,24 @@ def molecule_image(hoverData,value):
     fig.update_yaxes(visible=False),
 
     fig.update_layout(
-        title='<br>Molecule = '+df.SMILES[num]+'<br>'+str(value)+' = '+str(df[value][num]),
+        title='<br>Molecule = '+df.SMILES[num]+'<br>'+str(value)+' = '+str(df[value][num])+' '+units,
         font=dict(family="Arial",size=18),
         plot_bgcolor='rgba(255,255,240,1)',
         paper_bgcolor='rgba(255,255,240,1)',
-        margin=dict(l=20, r=20, t=100, b=0)
+        margin=dict(l=100, r=20, t=100, b=0)
         )
 
     
     fig.update_layout(
         plot_bgcolor='rgba(255,255,240,1)',
-        paper_bgcolor='rgba(255,255,240,1)',
-        margin=dict(l=20, r=20, t=150, b=00)
+        paper_bgcolor='rgba(255,255,240,1)'
         )
 
     fig2 = px.bar(potential,
     x='method',y='potential')
     
     
-    fig2.update_layout(width=400,height=400)
+    fig2.update_layout(width=400,height=600)
 
     fig2.update_layout(
     #title='Molecule dataset : Redoxmer electrolytes for Redox Flow Batteries (RFB)',
@@ -196,7 +206,8 @@ def molecule_image(hoverData,value):
     yaxis=dict(title='ERed (V)'),
     font=dict(family="Arial",size=18),
     plot_bgcolor='rgba(220,220,220,1)',
-    paper_bgcolor='rgba(255,255,240,1)'
+    paper_bgcolor='rgba(255,255,240,1)',
+    margin=dict(l=100, r=20, t=100, b=00)
     )
 
     return fig, fig2
