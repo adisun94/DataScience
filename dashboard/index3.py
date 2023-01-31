@@ -9,15 +9,18 @@ import plotly.express as px
 
 data_path = 'dashboard_data_5442mols.csv'
 
-df = pd.read_csv(data_path, header=0, index_col=0)
+df = pd.read_csv(data_path, header=0, index_col=None)
 
 lr_model = pickle.load(open('../Models/LinearRegression.sav', 'rb'))
 gbr_model = pickle.load(open('../Models/EnsembleGBR.sav', 'rb'))
 #nn_model = pickle.load(open('../Models/LinearRegression.sav', 'rb'))
 
+target_train = pd.read_csv('../Data/target_train.csv',index_col=0)
+target_test = pd.read_csv('../Data/target_test.csv',index_col=0)
+target = pd.concat((target_train,target_test))
+
 features_train = pd.read_csv('../Data/features_train_scaled.csv')
 features_test = pd.read_csv('../Data/features_test_scaled.csv')
-
 features = pd.concat((features_train,features_test))
 
 app.layout = html.Div([
@@ -147,12 +150,14 @@ def molecule_image(hoverData,value):
     df_row = df.iloc[num]
     img_src=io.imread('assets/molID_'+str(num)+'.png')
 
-    lr_pred=lr_model.predict(np.array(features.iloc[num]).reshape(1,-1))
-    gbr_pred=gbr_model.predict(np.array(features.iloc[num]).reshape(1,-1))
-    print(lr_pred[0])
+    dft_pot=float(target[target.SMILES==df.SMILES[num]]['ERed'])
+    feat_num=features[target.SMILES==df.SMILES[num]]
+
+    lr_pred=lr_model.predict(np.array(feat_num).reshape(1,-1))
+    gbr_pred=gbr_model.predict(np.array(feat_num).reshape(1,-1))
 
     potential={'method':['DFT','LinearReg','GBR'],
-               'potential':[0,lr_pred[0],gbr_pred[0]]}
+               'potential':[dft_pot,lr_pred[0],gbr_pred[0]]}
     potential=pd.DataFrame.from_dict(potential)
 
     fig = px.imshow(img_src)
@@ -165,7 +170,7 @@ def molecule_image(hoverData,value):
     fig.update_yaxes(visible=False),
 
     fig.update_layout(
-        title='<br>Molecule = '+df.index[num]+'<br>'+str(value)+' = '+str(df[value][num]),
+        title='<br>Molecule = '+df.SMILES[num]+'<br>'+str(value)+' = '+str(df[value][num]),
         font=dict(family="Arial",size=18),
         plot_bgcolor='rgba(255,255,240,1)',
         paper_bgcolor='rgba(255,255,240,1)',
