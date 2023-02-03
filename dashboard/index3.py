@@ -128,7 +128,7 @@ def molecule_image(hoverData,value):
         img = io.imread('assets/molecule.jpg')
         fig = px.imshow(img)
 
-        fig.update_layout(width=500,height=500)
+        fig.update_layout(width=400,height=400)
 
         fig.update_traces(hoverinfo="none", hovertemplate=None)
 
@@ -178,7 +178,7 @@ def molecule_image(hoverData,value):
 
     fig = px.imshow(img_src)
 
-    fig.update_layout(width=500,height=500)
+    fig.update_layout(width=400,height=400)
 
     fig.update_traces(hoverinfo="none", hovertemplate=None)
 
