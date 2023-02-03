@@ -6,6 +6,7 @@ from skimage import io
 from app import app
 import pickle
 import plotly.express as px
+import tensorflow as tf
 
 data_path = 'dashboard_data_5442mols.csv'
 
@@ -13,7 +14,7 @@ df = pd.read_csv(data_path, header=0, index_col=None)
 
 lr_model = pickle.load(open('../Models/LinearRegression.sav', 'rb'))
 gbr_model = pickle.load(open('../Models/EnsembleGBR.sav', 'rb'))
-#nn_model = pickle.load(open('../Models/LinearRegression.sav', 'rb'))
+nn_model = tf.keras.models.load_model('../Models/NN_model_tuned/')
 
 target_train = pd.read_csv('../Data/target_train.csv',index_col=0)
 target_test = pd.read_csv('../Data/target_test.csv',index_col=0)
@@ -121,7 +122,7 @@ def molecule_image(hoverData,value):
 
     if hoverData is None:
 
-        potential = {'method': ['DFT','LinearReg','GBR'], 'potential': [0,0,0]}
+        potential = {'method': ['DFT','LinearReg','GBR','NN'], 'potential': [0,0,0,0]}
         potential=pd.DataFrame.from_dict(potential)
 
         img = io.imread('assets/molecule.jpg')
@@ -169,9 +170,10 @@ def molecule_image(hoverData,value):
 
     lr_pred=lr_model.predict(np.array(feat_num).reshape(1,-1))
     gbr_pred=gbr_model.predict(np.array(feat_num).reshape(1,-1))
+    nn_pred=nn_model.predict(np.array(feat_num).reshape(1,-1))
 
-    potential={'method':['DFT','LinearReg','GBR'],
-               'potential':[dft_pot,lr_pred[0],gbr_pred[0]]}
+    potential={'method':['DFT','LinearReg','GBR','NN'],
+               'potential':[dft_pot,lr_pred[0],gbr_pred[0],nn_pred[0][0]]}
     potential=pd.DataFrame.from_dict(potential)
 
     fig = px.imshow(img_src)
